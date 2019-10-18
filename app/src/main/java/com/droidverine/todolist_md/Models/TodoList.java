@@ -1,7 +1,8 @@
 package com.droidverine.todolist_md.Models;
 
 public class TodoList {
-    String Taskname,Taskdate,Taskstatus;
+    private String Taskname,Taskdate,Taskstatus,TaskCategory;
+
 
     public TodoList() {
     }
@@ -10,6 +11,21 @@ public class TodoList {
         Taskname = taskname;
         Taskdate = taskdate;
         Taskstatus = taskstatus;
+    }
+
+    public TodoList(String taskname, String taskdate, String taskstatus, String taskCategory) {
+        Taskname = taskname;
+        Taskdate = taskdate;
+        Taskstatus = taskstatus;
+        TaskCategory = taskCategory;
+    }
+
+    public String getTaskCategory() {
+        return TaskCategory;
+    }
+
+    public void setTaskCategory(String taskCategory) {
+        TaskCategory = taskCategory;
     }
 
     public String getTaskname() {

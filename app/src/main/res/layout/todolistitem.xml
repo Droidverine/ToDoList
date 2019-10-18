@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-    android:elevation="8dp" >
+    android:elevation="8dp"
+    app:cardCornerRadius="8dp"
+  >
     <!-- Using cardview just to give it a descent materialistic look to listitem !-->
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:showDividers="end">
+        android:showDividers="end"
+        >
         <!-- Using RelativeLayout just to give it a descent materialistic look to listitem !-->
 
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:id="@+id/itemcheckbox"
+            android:clickable="true"
             android:layout_alignRight="@+id/Listitemdata">
 
         </CheckBox>
@@ -36,15 +41,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-
-                android:textSize="18dp" />
+                android:textSize="24dp" />
 
             <TextView
                 android:id="@+id/itemdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
         </LinearLayout>
     </RelativeLayout>

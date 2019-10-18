@@ -8,7 +8,17 @@
     android:orientation="vertical"
 
     tools:context=".Activities.AddtodoitemActivity">
-
+    <AutoCompleteTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Edtcategory"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:completionHint="-------"
+        android:hint="Category here"
+        android:textSize="18dp"
+        android:completionThreshold="1"
+        />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,16 +28,33 @@
         android:layout_marginRight="12dp"
         android:hint="Task Name"
         android:textSize="18dp"/>
-    <EditText
+
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:id="@+id/EdtDate"
+        android:gravity="center"
+        >
 
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:hint="Date here"
-        android:textSize="18dp"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:id="@+id/EdtDate"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:hint="Date here"
+            android:textSize="18dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:id="@+id/btndatepciker"
+        />
+    </LinearLayout>
+
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
