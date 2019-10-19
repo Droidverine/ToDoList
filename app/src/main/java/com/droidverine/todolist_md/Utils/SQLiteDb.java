@@ -64,12 +64,14 @@ public class SQLiteDb extends SQLiteOpenHelper {
         return "Succesfull";
     }
 
-    public String edititem(String oldTaskName, String TaskName, String Date) {
+    public String edititem(String oldTaskName, String TaskName, String taskdate) {
         //To Insert Data Into table
         try {
 
             SQLiteDatabase db = this.getWritableDatabase();
-            String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_NAME + " = '" + TaskName + "'" + " WHERE " + constants.TASK_NAME + " = '" + oldTaskName +
+            String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_NAME + " = '" + TaskName + "' , " +
+                    "" + constants.TASK_DATE + " = '" +
+                    " " + taskdate + " ' WHERE " + constants.TASK_NAME + " = '" + oldTaskName +
                     "' ;";
             db.execSQL(cursorQuery);
             Log.d("DATABASE", "ENTERED SUCCESSFULLY");
@@ -162,6 +164,23 @@ public class SQLiteDb extends SQLiteOpenHelper {
         String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_STATUS + " = '" + status + "'" + " WHERE " + constants.TASK_NAME + " = '" + taskname + "' AND "
                 + constants.TASK_CATEGORY + " = '" + category + "' ;";
         db.execSQL(cursorQuery);
+
+    }
+
+    public void deletetodoitem(String category, String taskname) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        if (taskname != null) {
+            String cursorQuery = "DELETE FROM " + constants.DBNAME + " WHERE " + constants.TASK_NAME + " = '" + taskname + "' AND "
+                    + constants.TASK_CATEGORY + " = '" + category + "' ;";
+            db.execSQL(cursorQuery);
+
+        } else {
+            //String  cursorQueryforcategoriestable = "DELETE " + constants.TABLE_CATEGORIES + " " + constants.CATEGORY_NAME + " = '" + category + "'" + " WHERE " + constants.CATEGORY_NAME + " = '" + category + "' AND "
+            //         + constants.TASK_CATEGORY + " = '" + category + "' ;";
+            //     String  cursorQueryfortodoitemstable = "DELETE " + constants.DBNAME + " " + constants.C + " = '" + category + "'" + " WHERE " + constants.CATEGORY_NAME + " = '" + category + "' AND "
+            //           + constants.TASK_CATEGORY + " = '" + category + "' ;";
+        }
+
 
     }
 

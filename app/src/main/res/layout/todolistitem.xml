@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="8dp"
-  >
+    app:cardCornerRadius="8dp">
     <!-- Using cardview just to give it a descent materialistic look to listitem !-->
 
     <RelativeLayout
@@ -15,29 +14,50 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="16dp"
-        android:showDividers="end"
-        >
+        android:showDividers="end">
         <!-- Using RelativeLayout just to give it a descent materialistic look to listitem !-->
 
         <CheckBox
+            android:id="@+id/itemcheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/Listitemdata"
             android:layout_centerVertical="true"
-            android:id="@+id/itemcheckbox"
-            android:clickable="true"
-            android:layout_alignRight="@+id/Listitemdata">
+            android:clickable="true">
 
         </CheckBox>
-        <ImageView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edtbtn"
-            android:src="@drawable/ic_edit_icon"
             android:layout_below="@+id/Listitemdata"
             android:layout_alignParentStart="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/edtbtn"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:background="#F1F0F0"
+                android:src="@drawable/ic_edit_icon"
 
 
-            />
+                />
+
+            <ImageView
+                android:id="@+id/deletebtn"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:background="#F1F0F0"
+
+                android:src="@drawable/ic_delete_icon"
+
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/Listitemdata"
             android:layout_width="match_parent"

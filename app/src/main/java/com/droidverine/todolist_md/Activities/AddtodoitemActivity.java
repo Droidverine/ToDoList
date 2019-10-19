@@ -68,6 +68,11 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
             Edtname.setVisibility(View.VISIBLE);
             Edtdate.setVisibility(View.VISIBLE);
             btndatepicker.setVisibility(View.VISIBLE);
+        } else if (intent.getStringExtra("TasksActivity") != null) {
+            ACTVcategory.setVisibility(View.GONE);
+            Edtname.setVisibility(View.VISIBLE);
+            Edtdate.setVisibility(View.VISIBLE);
+            btndatepicker.setVisibility(View.VISIBLE);
         }
         SQLiteDb sqLiteDb = new SQLiteDb(getApplicationContext());
         todoLists = sqLiteDb.getcategories("abc");
@@ -101,6 +106,13 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                 if (intent.getStringExtra("Activity") != null) {
                     String op = sqLiteDb.insertdb(category);
 
+                } else if (intent.getStringExtra("TasksActivity") != null) {
+                    name = Edtname.getText().toString();
+                    date = Edtdate.getText().toString();
+                    intent = getIntent();
+                    Log.d("ghemc", "" + intent.getStringExtra("TasksActivity"));
+                    sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
+
                 } else if (intent.getStringExtra("Edititem") != null) {
                     String edit = intent.getStringExtra("Edititem");
                     name = Edtname.getText().toString();
@@ -108,18 +120,16 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                     sqLiteDb.edititem(edit, name, date);
 
 
-                }
-                else if (intent.getStringExtra("EditCategory") != null) {
+                } else if (intent.getStringExtra("EditCategory") != null) {
 
-                    String op = sqLiteDb.editcategory(intent.getStringExtra("EditCategory").toString(),ACTVcategory.getText().toString());
+                    String op = sqLiteDb.editcategory(intent.getStringExtra("EditCategory").toString(), ACTVcategory.getText().toString());
                     if (op.equals("Exist")) {
                         Toast.makeText(getApplicationContext(), "Already Exists", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Entered Successufully", Toast.LENGTH_SHORT).show();
 
                     }
-                }
-                else if (intent.getStringExtra("Category") != null) {
+                } else if (intent.getStringExtra("Category") != null) {
                     String op = sqLiteDb.insertdb(category, name, date);
                     if (op.equals("Exist")) {
                         Toast.makeText(getApplicationContext(), "Already Exists", Toast.LENGTH_SHORT).show();

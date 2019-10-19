@@ -109,14 +109,15 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
     public class TodoViewHolder extends RecyclerView.ViewHolder {
         TextView txttaskname, txttaskdate;
         CheckBox checkBox;
-        ImageView edtbtn;
+        ImageView edtbtn, delbtn;
 
         public TodoViewHolder(@NonNull final View itemView) {
             super(itemView);
             txttaskname = itemView.findViewById(R.id.itemname);
             txttaskdate = itemView.findViewById(R.id.itemdate);
             checkBox = itemView.findViewById(R.id.itemcheckbox);
-            edtbtn= itemView.findViewById(R.id.edtbtn);
+            edtbtn = itemView.findViewById(R.id.edtbtn);
+            delbtn = itemView.findViewById(R.id.deletebtn);
             sqLiteDb = new SQLiteDb(context);
             edtbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -127,10 +128,38 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                     context.startActivity(intent);
                 }
             });
+            delbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    sqLiteDb.deletetodoitem(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname());
+                                    break;
+
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    break;
+                            }
+                        }
+                    };
+
+                    AlertDialog.Builder dgbuilder = new AlertDialog.Builder(itemView.getRootView().getContext());
+                    dgbuilder.setMessage("You really want to dwlwtw it?")
+                            .setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener)
+                            .show();
+
+
+                }
+            });
             txttaskname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(context, txttaskdate.getText().toString(), Toast.LENGTH_SHORT).show();
+
+
                 }
             });
             checkBox.setOnClickListener(new View.OnClickListener() {
