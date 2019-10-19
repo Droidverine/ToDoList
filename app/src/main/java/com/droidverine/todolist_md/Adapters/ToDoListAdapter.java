@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.droidverine.todolist_md.Activities.AddtodoitemActivity;
 import com.droidverine.todolist_md.Activities.TasksActivity;
 import com.droidverine.todolist_md.Models.TodoList;
 import com.droidverine.todolist_md.R;
@@ -58,12 +60,21 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                     context.startActivity(intent);
                 }
             });
+            holder.edtbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AddtodoitemActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("EditCategory", todoLists.get(position).getTaskCategory());
+                    context.startActivity(intent);
+                }
+            });
 
         } else if (todoLists != null && act == "taks") {
             holder.txttaskname.setText(todoLists.get(position).getTaskname());
             holder.txttaskdate.setText(todoLists.get(position).getTaskdate());
             holder.checkBox.setVisibility(View.VISIBLE);
-            if (todoLists.get(position).getTaskstatus().equals("PENDING")) {
+            if (todoLists.get(position).getTaskstatus().equals("0")) {
                 holder.checkBox.setChecked(false);
 
             } else {
@@ -98,13 +109,24 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
     public class TodoViewHolder extends RecyclerView.ViewHolder {
         TextView txttaskname, txttaskdate;
         CheckBox checkBox;
+        ImageView edtbtn;
 
         public TodoViewHolder(@NonNull final View itemView) {
             super(itemView);
             txttaskname = itemView.findViewById(R.id.itemname);
             txttaskdate = itemView.findViewById(R.id.itemdate);
             checkBox = itemView.findViewById(R.id.itemcheckbox);
+            edtbtn= itemView.findViewById(R.id.edtbtn);
             sqLiteDb = new SQLiteDb(context);
+            edtbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AddtodoitemActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Edititem", todoLists.get(getAdapterPosition()).getTaskname());
+                    context.startActivity(intent);
+                }
+            });
             txttaskname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -120,10 +142,10 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                             switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
                                     if (checkBox.isChecked()) {
-                                        sqLiteDb.checkboxset(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname(), "true");
+                                        sqLiteDb.checkboxset(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname(), "1");
 
                                     } else {
-                                        sqLiteDb.checkboxset(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname(), "PENDING");
+                                        sqLiteDb.checkboxset(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname(), "0");
 
                                     }
                                     break;

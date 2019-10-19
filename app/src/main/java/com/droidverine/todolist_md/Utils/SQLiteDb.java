@@ -53,8 +53,45 @@ public class SQLiteDb extends SQLiteOpenHelper {
             contentValues.put(constants.TASK_CATEGORY, Category);
             contentValues.put(constants.TASK_NAME, TaskName);
             contentValues.put(constants.TASK_DATE, Date);
-            contentValues.put(constants.TASK_STATUS, "PENDING");
+            contentValues.put(constants.TASK_STATUS, "0");
             sqLiteDatabase.insertOrThrow(constants.DBNAME, null, contentValues);
+            Log.d("DATABASE", "ENTERED SUCCESSFULLY");
+        } catch (android.database.sqlite.SQLiteConstraintException e) {
+            Log.e("DATABASE ERROR", e.toString());
+            return "Exist";
+
+        }
+        return "Succesfull";
+    }
+
+    public String edititem(String oldTaskName, String TaskName, String Date) {
+        //To Insert Data Into table
+        try {
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_NAME + " = '" + TaskName + "'" + " WHERE " + constants.TASK_NAME + " = '" + oldTaskName +
+                    "' ;";
+            db.execSQL(cursorQuery);
+            Log.d("DATABASE", "ENTERED SUCCESSFULLY");
+        } catch (android.database.sqlite.SQLiteConstraintException e) {
+            Log.e("DATABASE ERROR", e.toString());
+            return "Exist";
+
+        }
+        return "Succesfull";
+    }
+
+    public String editcategory(String oldCategoryname, String newCategoryname) {
+        //To Insert Data Into table
+        try {
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            String cursorQueryfortaskstable = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + newCategoryname + "'" + " WHERE " + constants.TASK_CATEGORY + " = '" + oldCategoryname +
+                    "' ;";
+            db.execSQL(cursorQueryfortaskstable);
+            String cursorQueryforcategoriestable = "UPDATE " + constants.TABLE_CATEGORIES + " SET " + constants.CATEGORY_NAME + " = '" + newCategoryname + "'" + " WHERE " + constants.CATEGORY_NAME + " = '" + oldCategoryname +
+                    "' ;";
+            db.execSQL(cursorQueryforcategoriestable);
             Log.d("DATABASE", "ENTERED SUCCESSFULLY");
         } catch (android.database.sqlite.SQLiteConstraintException e) {
             Log.e("DATABASE ERROR", e.toString());
@@ -68,7 +105,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
         List<TodoList> todoListArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "' ORDER BY TASKDATE DESC ;";
+        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "' ORDER BY TASKSTATYS DESC, TASKDATE ASC;";
         Cursor cursor = db.rawQuery(cursorQuery, null);
         for (cursor.moveToLast(); !cursor.isBeforeFirst(); cursor.moveToPrevious()) {
             TodoList todoList_data = new TodoList();
@@ -79,6 +116,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
             todoListArrayList.add(todoList_data);
             Log.d("DATABASE", todoListArrayList.toString());
         }
+
 
         cursor.close();
         db.close();
