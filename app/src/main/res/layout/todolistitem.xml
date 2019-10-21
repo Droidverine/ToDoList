@@ -16,7 +16,19 @@
         android:padding="16dp"
         android:showDividers="end">
         <!-- Using RelativeLayout just to give it a descent materialistic look to listitem !-->
-
+        <Button
+            android:id="@+id/buttonOptions"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="&#8942;"
+            android:visibility="gone"
+            android:textAppearance="?android:textAppearanceLarge" />
         <CheckBox
             android:id="@+id/itemcheckbox"
             android:layout_width="wrap_content"
@@ -28,30 +40,51 @@
         </CheckBox>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/Listitemdata"
             android:layout_alignParentStart="true"
             android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:id="@+id/txtitemscount"
+                android:paddingEnd="12dp"></TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:id="@+id/txtitemscompletecount"
+
+                android:paddingEnd="12dp"></TextView>
 
             <ImageView
                 android:id="@+id/edtbtn"
-                android:layout_width="0dp"
+                android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
-                android:background="#F1F0F0"
                 android:src="@drawable/ic_edit_icon"
+
+
+                />
+            <ImageView
+                android:id="@+id/movebtn"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_move_icon"
 
 
                 />
 
             <ImageView
                 android:id="@+id/deletebtn"
-                android:layout_width="0dp"
+                android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_weight="1"
-                android:background="#F1F0F0"
 
                 android:src="@drawable/ic_delete_icon"
 

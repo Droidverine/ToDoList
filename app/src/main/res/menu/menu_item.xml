@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.droidverine.todolist_md.Activities.TasksActivity">
+    <item
+        android:id="@+id/menu_edtbtn"
+        android:icon="@android:drawable/ic_dialog_map"
+        android:title="Edit" />
+    <item
+        android:id="@+id/menu_delbtn"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="Delete" />
+
+
+</menu>

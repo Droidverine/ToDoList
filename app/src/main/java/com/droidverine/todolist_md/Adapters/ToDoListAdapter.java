@@ -4,12 +4,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,9 +52,21 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
     @Override
     public void onBindViewHolder(@NonNull final TodoViewHolder holder, final int position) {
         if (todoLists != null && act == "Home") {
+            sqLiteDb = new SQLiteDb(context);
             holder.txttaskname.setText(todoLists.get(position).getTaskCategory());
             holder.txttaskdate.setText("");
             holder.checkBox.setVisibility(View.INVISIBLE);
+            holder.optionsbtn.setVisibility(View.VISIBLE);
+            holder.delbtn.setVisibility(View.GONE);
+            holder.edtbtn.setVisibility(View.GONE);
+            holder.movebtn.setVisibility(View.GONE);
+            holder.txttaskcompletedcount.setVisibility(View.VISIBLE);
+            holder.txttaskcount.setVisibility(View.VISIBLE);
+            int count = sqLiteDb.countitems(todoLists.get(position).getTaskCategory());
+            int comcount = sqLiteDb.getcompletedcount(todoLists.get(position).getTaskCategory());
+            holder.txttaskcount.setText("No. Of tasks: " + count);
+            holder.txttaskcompletedcount.setText("Completed till now: " + comcount);
+
             holder.txttaskname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -73,6 +89,9 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
         } else if (todoLists != null && act == "taks") {
             holder.txttaskname.setText(todoLists.get(position).getTaskname());
             holder.txttaskdate.setText(todoLists.get(position).getTaskdate());
+            holder.txttaskcompletedcount.setVisibility(View.GONE);
+            holder.txttaskcount.setVisibility(View.GONE);
+
             holder.checkBox.setVisibility(View.VISIBLE);
             if (todoLists.get(position).getTaskstatus().equals("0")) {
                 holder.checkBox.setChecked(false);
@@ -107,24 +126,68 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
     }
 
     public class TodoViewHolder extends RecyclerView.ViewHolder {
-        TextView txttaskname, txttaskdate;
+        TextView txttaskname, txttaskdate, txttaskcount, txttaskcompletedcount;
         CheckBox checkBox;
-        ImageView edtbtn, delbtn;
+        ImageView edtbtn, delbtn, movebtn;
+        Button optionsbtn;
 
         public TodoViewHolder(@NonNull final View itemView) {
             super(itemView);
             txttaskname = itemView.findViewById(R.id.itemname);
             txttaskdate = itemView.findViewById(R.id.itemdate);
             checkBox = itemView.findViewById(R.id.itemcheckbox);
+            txttaskcount = itemView.findViewById(R.id.txtitemscount);
+            txttaskcompletedcount = itemView.findViewById(R.id.txtitemscompletecount);
+            movebtn = itemView.findViewById(R.id.movebtn);
             edtbtn = itemView.findViewById(R.id.edtbtn);
             delbtn = itemView.findViewById(R.id.deletebtn);
             sqLiteDb = new SQLiteDb(context);
+            optionsbtn = itemView.findViewById(R.id.buttonOptions);
+            optionsbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(itemView.getRootView().getContext(), itemView);
+
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.menu_edtbtn:
+                                    Intent intent = new Intent(context, AddtodoitemActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.putExtra("EditCategory", todoLists.get(getAdapterPosition()).getTaskCategory());
+                                    context.startActivity(intent);
+                                    return true;
+                                case R.id.menu_delbtn:
+
+                                    return true;
+
+                                default:
+                                    return false;
+                            }
+                        }
+                    });
+                    // here you can inflate your menu
+                    popup.inflate(R.menu.menu_item);
+                    popup.setGravity(Gravity.RIGHT);
+                    popup.show();
+                }
+            });
             edtbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, AddtodoitemActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Edititem", todoLists.get(getAdapterPosition()).getTaskname());
+                    context.startActivity(intent);
+                }
+            });
+            movebtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, AddtodoitemActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("MovetoCat", todoLists.get(getAdapterPosition()).getTaskname());
                     context.startActivity(intent);
                 }
             });

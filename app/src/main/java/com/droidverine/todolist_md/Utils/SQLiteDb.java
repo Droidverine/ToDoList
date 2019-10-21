@@ -65,7 +65,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public String edititem(String oldTaskName, String TaskName, String taskdate) {
-        //To Insert Data Into table
+        //To Edit item
         try {
 
             SQLiteDatabase db = this.getWritableDatabase();
@@ -84,8 +84,8 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public String editcategory(String oldCategoryname, String newCategoryname) {
-        //To Insert Data Into table
         try {
+            //To Edit category
 
             SQLiteDatabase db = this.getWritableDatabase();
             String cursorQueryfortaskstable = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + newCategoryname + "'" + " WHERE " + constants.TASK_CATEGORY + " = '" + oldCategoryname +
@@ -183,5 +183,49 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
 
     }
+
+    public int countitems(String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String cursorQueryforcategoriestable = "SELECT * FROM " + constants.DBNAME + " WHERE TASKCATEGORY = '" + category + "';";
+        // db.execSQL(cursorQueryforcategoriestable);
+        Cursor cursor = db.rawQuery(cursorQueryforcategoriestable, null);
+        int count = cursor.getCount();
+        cursor.close();
+        Log.d("counter", "" + count);
+
+        return count;
+    }
+
+    public int getcompletedcount(String category) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String cursorQueryforcategoriestable = "SELECT * FROM " + constants.DBNAME + " WHERE TASKCATEGORY = '" + category + "' AND TASKSTATYS = '1' ;";
+        // db.execSQL(cursorQueryforcategoriestable);
+        Cursor cursor = db.rawQuery(cursorQueryforcategoriestable, null);
+        int count = cursor.getCount();
+        cursor.close();
+        Log.d("completed count", "" + count);
+
+        return count;
+    }
+
+    public String moveitem(String Category, String TaskName) {
+        try {
+
+            SQLiteDatabase db = this.getWritableDatabase();
+            String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + Category + "'  " +
+                    " WHERE " + constants.TASK_NAME + " = '" + TaskName +
+                    "' ;";
+            db.execSQL(cursorQuery);
+            Log.d("DATABASE", "Moved SUCCESSFULLY");
+        } catch (android.database.sqlite.SQLiteConstraintException e) {
+            Log.e("DATABASE ERROR", e.toString());
+            return "Exist";
+
+        }
+        return "Succesfull";
+    }
+
 
 }

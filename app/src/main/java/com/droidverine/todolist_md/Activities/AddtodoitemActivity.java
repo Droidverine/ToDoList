@@ -73,6 +73,11 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
             Edtname.setVisibility(View.VISIBLE);
             Edtdate.setVisibility(View.VISIBLE);
             btndatepicker.setVisibility(View.VISIBLE);
+        } else if (intent.getStringExtra("MovetoCat") != null) {
+            ACTVcategory.setVisibility(View.VISIBLE);
+            Edtname.setVisibility(View.GONE);
+            Edtdate.setVisibility(View.GONE);
+            btndatepicker.setVisibility(View.GONE);
         }
         SQLiteDb sqLiteDb = new SQLiteDb(getApplicationContext());
         todoLists = sqLiteDb.getcategories("abc");
@@ -135,6 +140,14 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                         Toast.makeText(getApplicationContext(), "Already Exists", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "Entered Successufully", Toast.LENGTH_SHORT).show();
+
+                    }
+                } else if (intent.getStringExtra("MovetoCat") != null) {
+                    String op = sqLiteDb.moveitem(category, intent.getStringExtra("MovetoCat"));
+                    if (op.equals("Exist")) {
+                        Toast.makeText(getApplicationContext(), "Already Exists in this category", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Moved Successufully", Toast.LENGTH_SHORT).show();
 
                     }
                 }
