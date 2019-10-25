@@ -113,9 +113,20 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
 
                 } else if (intent.getStringExtra("TasksActivity") != null) {
                     name = Edtname.getText().toString();
+
                     date = Edtdate.getText().toString();
                     intent = getIntent();
                     Log.d("ghemc", "" + intent.getStringExtra("TasksActivity"));
+                    if(date.equals(""))
+                    {
+                        sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, "Infinity");
+
+                    }
+                    else{
+                        sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
+
+                    }
+
                     sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
 
                 } else if (intent.getStringExtra("Edititem") != null) {

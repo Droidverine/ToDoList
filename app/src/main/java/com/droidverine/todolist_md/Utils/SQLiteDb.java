@@ -52,6 +52,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(constants.TASK_CATEGORY, Category);
             contentValues.put(constants.TASK_NAME, TaskName);
+            double inf = Double.POSITIVE_INFINITY;
             contentValues.put(constants.TASK_DATE, Date);
             contentValues.put(constants.TASK_STATUS, "0");
             sqLiteDatabase.insertOrThrow(constants.DBNAME, null, contentValues);
@@ -107,7 +108,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
         List<TodoList> todoListArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "' ORDER BY TASKSTATYS DESC, TASKDATE ASC;";
+        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "'  ORDER BY TASKSTATYS DESC, TASKDATE DESC ;";
         Cursor cursor = db.rawQuery(cursorQuery, null);
         for (cursor.moveToLast(); !cursor.isBeforeFirst(); cursor.moveToPrevious()) {
             TodoList todoList_data = new TodoList();
@@ -167,6 +168,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
     }
 
+    //To delete particular task from category
     public void deletetodoitem(String category, String taskname) {
         SQLiteDatabase db = this.getWritableDatabase();
         if (taskname != null) {
@@ -174,13 +176,19 @@ public class SQLiteDb extends SQLiteOpenHelper {
                     + constants.TASK_CATEGORY + " = '" + category + "' ;";
             db.execSQL(cursorQuery);
 
-        } else {
-            //String  cursorQueryforcategoriestable = "DELETE " + constants.TABLE_CATEGORIES + " " + constants.CATEGORY_NAME + " = '" + category + "'" + " WHERE " + constants.CATEGORY_NAME + " = '" + category + "' AND "
-            //         + constants.TASK_CATEGORY + " = '" + category + "' ;";
-            //     String  cursorQueryfortodoitemstable = "DELETE " + constants.DBNAME + " " + constants.C + " = '" + category + "'" + " WHERE " + constants.CATEGORY_NAME + " = '" + category + "' AND "
-            //           + constants.TASK_CATEGORY + " = '" + category + "' ;";
         }
 
+
+    }
+//To delete category with all the tasks inside.
+
+    public void deletecategory(String category) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String cursorQueryforcategoriestable = "DELETE FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + category + "' ;";
+        String cursorQueryfortodoitemstable = "DELETE FROM " + constants.TABLE_CATEGORIES + " WHERE " + constants.CATEGORY_NAME + " = '" + category +
+                "' ;";
+        db.execSQL(cursorQueryforcategoriestable);
+        db.execSQL(cursorQueryfortodoitemstable);
 
     }
 
@@ -225,6 +233,28 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
         }
         return "Succesfull";
+    }
+
+    public String getDates(String category) {
+        List<TodoList> todoListArrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String date;
+        String cursorQuery = "SELECT  TASKDATE FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + category + "' AND TASKSTATYS = '0' ORDER BY TASKDATE ASC";
+        Cursor cursor = db.rawQuery(cursorQuery, null);
+        if (cursor.moveToFirst()) {
+            TodoList todoList_data = new TodoList();
+            todoList_data.setTaskdate(cursor.getString(cursor.getColumnIndex(constants.TASK_DATE)));
+            date = "" + cursor.getString(cursor.getColumnIndex(constants.TASK_DATE));
+            todoListArrayList.add(todoList_data);
+        } else {
+            date = "";
+        }
+
+        // Log.d("ala",""+cursor.getString(cursor.getColumnIndex(constants.TASK_DATE)));
+        cursor.close();
+        db.close();
+        return date;
+
     }
 
 

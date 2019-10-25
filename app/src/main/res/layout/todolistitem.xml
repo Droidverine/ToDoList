@@ -5,7 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    android:id="@+id/cardItem"
+    app:cardBackgroundColor="#FFFFFFFF">
     <!-- Using cardview just to give it a descent materialistic look to listitem !-->
 
     <RelativeLayout
@@ -13,12 +15,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+
         android:padding="16dp"
         android:showDividers="end">
         <!-- Using RelativeLayout just to give it a descent materialistic look to listitem !-->
         <Button
             android:id="@+id/buttonOptions"
-            android:layout_width="10dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"

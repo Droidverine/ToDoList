@@ -26,7 +26,12 @@ public class TasksActivity extends AppCompatActivity implements View.OnClickList
     ToDoListAdapter toDoListAdapter;
     List<TodoList> todoLists;
     Intent intent, intent1;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("Activity", "paused");
 
+    }
     @Override
     protected void onStart() {
         super.onStart();
