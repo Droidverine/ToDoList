@@ -2,7 +2,6 @@ package com.droidverine.todolist_md.Adapters;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droidverine.todolist_md.Activities.AddtodoitemActivity;
+import com.droidverine.todolist_md.Activities.DialogActivity;
 import com.droidverine.todolist_md.Activities.TasksActivity;
 import com.droidverine.todolist_md.Models.TodoList;
 import com.droidverine.todolist_md.R;
@@ -28,13 +28,11 @@ import com.droidverine.todolist_md.Utils.SQLiteDb;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
+
 import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -62,6 +60,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
     @Override
     public void onBindViewHolder(@NonNull final TodoViewHolder holder, final int position) {
         if (todoLists != null && act == "Home") {
+            //executes this part if the previous activity was Home
             sqLiteDb = new SQLiteDb(context);
             holder.txttaskname.setText(todoLists.get(position).getTaskCategory());
             String date = "";
@@ -70,7 +69,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                 date = sqLiteDb.getDates(todoLists.get(position).getTaskCategory());
 
             }
-            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df = new SimpleDateFormat("yyy/MM/dd");
             Date date1 = new Date();
             Date nddate = null;
             String nd = df.format(date1);
@@ -85,16 +84,16 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                 Log.d("compare1", "status " + due.compareTo(nddate));
 
                 if (due.compareTo(nddate) < 0) {
-                    // IF DUE HAS PASSED
+                    // If due has passed
                     Log.d("compare1", "past " + due);
 
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#D81B60"));
                 } else if (due.compareTo(nddate) > 0) {
-                    //IF DUE IS FUTURE
+                    //If due is not present/it's not today.
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
 
                 } else if (nddate.compareTo(due) == 0) {
-                    //IF DUE IS TODAY
+                    //if due is today
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#FFEB3B"));
 
                 }
@@ -126,10 +125,12 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
             holder.edtbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Intent intent = new Intent(context, AddtodoitemActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("EditCategory", todoLists.get(position).getTaskCategory());
                     context.startActivity(intent);
+
                 }
             });
 
@@ -214,14 +215,19 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()) {
                                 case R.id.menu_edtbtn:
+                                    //To edit category
                                     Intent intent = new Intent(context, AddtodoitemActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.putExtra("EditCategory", todoLists.get(getAdapterPosition()).getTaskCategory());
                                     context.startActivity(intent);
                                     return true;
                                 case R.id.menu_delbtn:
-                                    sqLiteDb.deletecategory(todoLists.get(getAdapterPosition()).getTaskCategory());
-
+                                    //To delete Category.
+                                    Intent intent1 = new Intent(context, DialogActivity.class);
+                                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent1.putExtra("OperationType", "DeleteCategory");
+                                    intent1.putExtra("TaskCat", todoLists.get(getAdapterPosition()).getTaskCategory());
+                                    context.startActivity(intent1);
                                     return true;
 
                                 default:
@@ -256,25 +262,13 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
             delbtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    sqLiteDb.deletetodoitem(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname());
-                                    break;
+                    Intent intent = new Intent(context, DialogActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("OperationType", "Delete");
 
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    break;
-                            }
-                        }
-                    };
-
-                    AlertDialog.Builder dgbuilder = new AlertDialog.Builder(itemView.getRootView().getContext());
-                    dgbuilder.setMessage("You really want to delete it?")
-                            .setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener)
-                            .show();
+                    intent.putExtra("TaskName", todoLists.get(getAdapterPosition()).getTaskname());
+                    intent.putExtra("TaskCat", todoLists.get(getAdapterPosition()).getTaskCategory());
+                    context.startActivity(intent);
 
 
                 }
@@ -284,37 +278,19 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                 public void onClick(View view) {
                     Toast.makeText(context, txttaskdate.getText().toString(), Toast.LENGTH_SHORT).show();
 
-
                 }
             });
             checkBox.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    if (checkBox.isChecked()) {
-                                        sqLiteDb.checkboxset(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname(), "1");
-
-                                    } else {
-                                        sqLiteDb.checkboxset(todoLists.get(getAdapterPosition()).getTaskCategory(), todoLists.get(getAdapterPosition()).getTaskname(), "0");
-
-                                    }
-                                    break;
-
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    break;
-                            }
-                        }
-                    };
-
-                    AlertDialog.Builder dgbuilder = new AlertDialog.Builder(itemView.getRootView().getContext());
-                    dgbuilder.setMessage("You sure about this?")
-                            .setPositiveButton("Yes", dialogClickListener)
-                            .setNegativeButton("No", dialogClickListener)
-                            .show();
+                    Intent intent = new Intent(context, DialogActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("OperationType", "Checkbox");
+                    intent.putExtra("TaskName", todoLists.get(getAdapterPosition()).getTaskname());
+                    intent.putExtra("TaskCat", todoLists.get(getAdapterPosition()).getTaskCategory());
+                    intent.putExtra("Checkboxstat", checkBox.isChecked());
+                    context.startActivity(intent);
 
                 }
             });

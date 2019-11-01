@@ -30,8 +30,8 @@ public class HomeActivity extends AppCompatActivity {
     Intent intent;
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onPostResume() {
+        super.onPostResume();
         intent = getIntent();
         sqLiteDb = new SQLiteDb(getApplicationContext());
         sqLiteDb.getReadableDatabase();
@@ -41,6 +41,12 @@ public class HomeActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutmanager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(toDoListAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
     }
 
     @Override

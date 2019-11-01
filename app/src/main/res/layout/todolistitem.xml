@@ -7,7 +7,7 @@
     android:elevation="8dp"
     app:cardCornerRadius="8dp"
     android:id="@+id/cardItem"
-    app:cardBackgroundColor="#FFFFFFFF">
+    app:cardBackgroundColor="#FFFFFF">
     <!-- Using cardview just to give it a descent materialistic look to listitem !-->
 
     <RelativeLayout

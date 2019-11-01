@@ -26,18 +26,16 @@ public class TasksActivity extends AppCompatActivity implements View.OnClickList
     ToDoListAdapter toDoListAdapter;
     List<TodoList> todoLists;
     Intent intent, intent1;
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.d("Activity", "paused");
 
-    }
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.d("Activity resumed", "resumed");
         sqLiteDb = new SQLiteDb(getApplicationContext());
         sqLiteDb.getReadableDatabase();
         intent1 = getIntent();
+
         Log.d("category ali", "" + intent1.getStringExtra("Category"));
         todoLists = sqLiteDb.gettodolist(intent1.getStringExtra("Category"));
         toDoListAdapter = new ToDoListAdapter(getApplicationContext(), todoLists, "taks");
@@ -45,7 +43,10 @@ public class TasksActivity extends AppCompatActivity implements View.OnClickList
         recyclerView.setLayoutManager(layoutmanager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(toDoListAdapter);
+
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class TasksActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
+                //TO add new task
                 Intent intent = new Intent(TasksActivity.this, AddtodoitemActivity.class);
                 intent.putExtra("TasksActivity", intent1.getStringExtra("Category"));
                 this.startActivity(intent);

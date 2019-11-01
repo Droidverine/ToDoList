@@ -1,6 +1,5 @@
 package com.droidverine.todolist_md.Utils;
 
-import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -105,10 +104,10 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public List<TodoList> gettodolist(String Category) {
-
+        //Get todo list as per category
         List<TodoList> todoListArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "'  ORDER BY TASKSTATYS DESC, TASKDATE DESC ;";
+        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "'  ORDER BY  TASKDATE DESC, TASKSTATYS DESC;";
         Cursor cursor = db.rawQuery(cursorQuery, null);
         for (cursor.moveToLast(); !cursor.isBeforeFirst(); cursor.moveToPrevious()) {
             TodoList todoList_data = new TodoList();
@@ -129,7 +128,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
     public String insertdb(String Category) {
         try {
 
-
+            //Create new Category
             SQLiteDatabase sqLiteDatabase = getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put(constants.CATEGORY_NAME, Category);
@@ -143,7 +142,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public List<TodoList> getcategories(String Category) {
-
+        //To get all categories
         List<TodoList> todoLists = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
         String cursorQuery = "SELECT DISTINCT " + constants.CATEGORY_NAME + " FROM " + constants.TABLE_CATEGORIES + " ;";
@@ -160,7 +159,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public void checkboxset(String category, String taskname, String status) {
-
+        //For setting checkbox status.
         SQLiteDatabase db = this.getWritableDatabase();
         String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_STATUS + " = '" + status + "'" + " WHERE " + constants.TASK_NAME + " = '" + taskname + "' AND "
                 + constants.TASK_CATEGORY + " = '" + category + "' ;";
@@ -193,10 +192,10 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public int countitems(String category) {
+        //To get count of tasks in every category
         SQLiteDatabase db = this.getReadableDatabase();
 
         String cursorQueryforcategoriestable = "SELECT * FROM " + constants.DBNAME + " WHERE TASKCATEGORY = '" + category + "';";
-        // db.execSQL(cursorQueryforcategoriestable);
         Cursor cursor = db.rawQuery(cursorQueryforcategoriestable, null);
         int count = cursor.getCount();
         cursor.close();
@@ -206,8 +205,9 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public int getcompletedcount(String category) {
-        SQLiteDatabase db = this.getReadableDatabase();
+        //To get count of tasks which have been completed in every category
 
+        SQLiteDatabase db = this.getReadableDatabase();
         String cursorQueryforcategoriestable = "SELECT * FROM " + constants.DBNAME + " WHERE TASKCATEGORY = '" + category + "' AND TASKSTATYS = '1' ;";
         // db.execSQL(cursorQueryforcategoriestable);
         Cursor cursor = db.rawQuery(cursorQueryforcategoriestable, null);
@@ -220,7 +220,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
     public String moveitem(String Category, String TaskName) {
         try {
-
+            //For moving Item(task) from one category to other.
             SQLiteDatabase db = this.getWritableDatabase();
             String cursorQuery = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + Category + "'  " +
                     " WHERE " + constants.TASK_NAME + " = '" + TaskName +
@@ -236,6 +236,8 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public String getDates(String category) {
+        //For Getting Dates of each task as per category.
+
         List<TodoList> todoListArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String date;

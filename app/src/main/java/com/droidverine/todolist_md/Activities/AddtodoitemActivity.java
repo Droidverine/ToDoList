@@ -172,7 +172,16 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                                Edtdate.setText(day + "/" + (month + 1) + "/" + year);
+                                if(day>9)
+                                {
+                                    Edtdate.setText(year + "/" + (month + 1) + "/" + day);
+
+                                }
+                                else  if(day<10)
+                                {
+                                    Edtdate.setText(year + "/" + (month + 1) + "/0" + day);
+
+                                }
                             }
                         }, year, month, dateofMonth);
                 datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());

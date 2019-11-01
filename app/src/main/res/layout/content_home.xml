@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.HomeActivity"
-    tools:showIn="@layout/activity_home">
+    tools:showIn="@layout/activity_home"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclercategories"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
