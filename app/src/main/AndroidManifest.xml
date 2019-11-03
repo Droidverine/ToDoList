@@ -27,7 +27,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".Activities.DialogActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" >
-            ></activity>
+            </activity>
 
         <activity
             android:name=".Activities.TasksActivity"

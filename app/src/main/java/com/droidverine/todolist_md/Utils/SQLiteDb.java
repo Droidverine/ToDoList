@@ -84,23 +84,45 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public String editcategory(String oldCategoryname, String newCategoryname) {
-        try {
-            //To Edit category
+        String msg="";
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            SQLiteDatabase db = this.getWritableDatabase();
-            String cursorQueryfortaskstable = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + newCategoryname + "'" + " WHERE " + constants.TASK_CATEGORY + " = '" + oldCategoryname +
-                    "' ;";
-            db.execSQL(cursorQueryfortaskstable);
+        try {
+
+            //To Edit category
             String cursorQueryforcategoriestable = "UPDATE " + constants.TABLE_CATEGORIES + " SET " + constants.CATEGORY_NAME + " = '" + newCategoryname + "'" + " WHERE " + constants.CATEGORY_NAME + " = '" + oldCategoryname +
-                    "' ;";
+                    "';";
             db.execSQL(cursorQueryforcategoriestable);
-            Log.d("DATABASE", "ENTERED SUCCESSFULLY");
+
+
+
         } catch (android.database.sqlite.SQLiteConstraintException e) {
             Log.e("DATABASE ERROR", e.toString());
-            return "Exist";
+            msg="Exists";
 
         }
-        return "Succesfull";
+        if(msg.equals("Exists"))
+        {
+            return  msg;
+        }else{
+            String cursorQueryfortaskstable = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + newCategoryname + "'" + " WHERE " + constants.TASK_CATEGORY + " = '" + oldCategoryname +
+                    "' ;";
+            try {
+                db.execSQL(cursorQueryfortaskstable);
+                msg="Success";
+
+            }catch (Exception E)
+            {
+                msg="Are you kidding";
+
+            }
+
+        }
+
+
+
+
+        return msg;
     }
 
     public List<TodoList> gettodolist(String Category) {

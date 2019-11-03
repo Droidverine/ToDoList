@@ -7,6 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.TasksActivity"
     tools:showIn="@layout/activity_tasks"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

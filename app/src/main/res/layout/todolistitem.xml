@@ -5,9 +5,11 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:elevation="8dp"
-    app:cardCornerRadius="8dp"
     android:id="@+id/cardItem"
-    app:cardBackgroundColor="#FFFFFF">
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:focusable="true"
+    app:cardBackgroundColor="@color/CardBackground">
     <!-- Using cardview just to give it a descent materialistic look to listitem !-->
 
     <RelativeLayout
@@ -31,6 +33,9 @@
             android:gravity="center"
             android:text="&#8942;"
             android:visibility="gone"
+            android:textColor="@color/CardTitle"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:focusable="true"
             android:textAppearance="?android:textAppearanceLarge" />
         <CheckBox
             android:id="@+id/itemcheckbox"
@@ -38,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignRight="@+id/Listitemdata"
             android:layout_centerVertical="true"
+            android:buttonTint="@color/CardTitle"
             android:clickable="true">
 
         </CheckBox>
@@ -47,20 +53,23 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/Listitemdata"
             android:layout_alignParentStart="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="6dp"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" "
                 android:id="@+id/txtitemscount"
-                android:paddingEnd="12dp"></TextView>
+                android:textColor="@color/CardSubtext"
+                android:paddingRight="12dp"></TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" "
                 android:id="@+id/txtitemscompletecount"
-
-                android:paddingEnd="12dp"></TextView>
+                android:textColor="@color/Completedtasks"
+                android:paddingRight="12dp"></TextView>
 
             <ImageView
                 android:id="@+id/edtbtn"
@@ -69,6 +78,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
                 android:src="@drawable/ic_edit_icon"
+                android:tint="@color/CardSubtext"
 
 
                 />
@@ -80,6 +90,7 @@
                 android:layout_weight="1"
                 android:src="@drawable/ic_move_icon"
 
+                android:tint="@color/CardSubtext"
 
                 />
 
@@ -88,6 +99,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_weight="1"
+                android:tint="@color/CardSubtext"
 
                 android:src="@drawable/ic_delete_icon"
 
@@ -106,6 +118,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
+                android:textStyle="bold"
+                android:textColor="@color/CardTitle"
                 android:textSize="24dp" />
 
             <TextView
@@ -113,6 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date"
+                android:textColor="@color/CardSubtext"
                 android:textSize="16dp" />
 
 

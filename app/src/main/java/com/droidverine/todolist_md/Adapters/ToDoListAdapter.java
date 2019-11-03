@@ -88,13 +88,19 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                     Log.d("compare1", "past " + due);
 
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#D81B60"));
+                    holder.txttaskname.setTextColor(Color.parseColor("#000000"));
+                    holder.txttaskcount.setTextColor(Color.parseColor("#000000"));
+                    holder.txttaskcompletedcount.setTextColor(Color.parseColor("#ffffff"));
+
                 } else if (due.compareTo(nddate) > 0) {
                     //If due is not present/it's not today.
-                    holder.carditem.setCardBackgroundColor(Color.parseColor("#FFFFFF"));
+                    holder.carditem.setCardBackgroundColor(Color.parseColor("#3390A4AE"));
 
                 } else if (nddate.compareTo(due) == 0) {
                     //if due is today
-                    holder.carditem.setCardBackgroundColor(Color.parseColor("#FFEB3B"));
+                    holder.carditem.setCardBackgroundColor(Color.parseColor("#ffee58"));
+                    holder.txttaskname.setTextColor(Color.parseColor("#000000"));
+                    holder.txttaskcount.setTextColor(Color.parseColor("#000000"));
 
                 }
             }

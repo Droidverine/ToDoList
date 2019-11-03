@@ -12,20 +12,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.droidverine.todolist_md.Models.TodoList;
 import com.droidverine.todolist_md.R;
 import com.droidverine.todolist_md.Utils.SQLiteDb;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class AddtodoitemActivity extends AppCompatActivity implements View.OnClickListener {
     Calendar calendar;
     SQLiteDb sqLiteDb;
-    EditText Edtname, Edtdate;
-    AutoCompleteTextView ACTVcategory;
+    EditText Edtname, Edtdate,Edtcat;
     Button btnaddtodo, btndatepicker;
     List<TodoList> todoLists;
     DatePickerDialog datePickerDialog;
@@ -33,33 +34,38 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
     int month;
     int dateofMonth;
     Intent intent;
+    Spinner spinnercategories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addtodoitem);
+        spinnercategories = (Spinner) findViewById(R.id.spiner_categories);
+
+        Edtcat=findViewById(R.id.Edtcategory);
         Edtname = findViewById(R.id.EdtName);
         Edtdate = findViewById(R.id.EdtDate);
         btnaddtodo = findViewById(R.id.btnaddtolist);
         btndatepicker = findViewById(R.id.btndatepciker);
         btndatepicker.setOnClickListener(this);
         btnaddtodo.setOnClickListener(this);
-        ACTVcategory = findViewById(R.id.Edtcategory);
         intent = getIntent();
         if (intent.getStringExtra("Activity") != null) {
-            ACTVcategory.setVisibility(View.VISIBLE);
+            Edtcat.setVisibility(View.VISIBLE);
             Edtname.setVisibility(View.GONE);
             Edtdate.setVisibility(View.GONE);
             btndatepicker.setVisibility(View.GONE);
 
+
         } else if (intent.getStringExtra("EditCategory") != null) {
 
-            ACTVcategory.setVisibility(View.VISIBLE);
+            Edtcat.setVisibility(View.VISIBLE);
             Edtname.setVisibility(View.GONE);
             Edtdate.setVisibility(View.GONE);
             btndatepicker.setVisibility(View.GONE);
         } else if (intent.getStringExtra("Edititem") != null) {
-            ACTVcategory.setVisibility(View.GONE);
+            Edtcat.setVisibility(View.INVISIBLE);
+
             Edtname.setVisibility(View.VISIBLE);
             Edtdate.setVisibility(View.VISIBLE);
             btndatepicker.setVisibility(View.VISIBLE);
@@ -69,17 +75,33 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
             Edtdate.setVisibility(View.VISIBLE);
             btndatepicker.setVisibility(View.VISIBLE);
         } else if (intent.getStringExtra("TasksActivity") != null) {
-            ACTVcategory.setVisibility(View.GONE);
+            Edtcat.setVisibility(View.GONE);
+
             Edtname.setVisibility(View.VISIBLE);
             Edtdate.setVisibility(View.VISIBLE);
             btndatepicker.setVisibility(View.VISIBLE);
         } else if (intent.getStringExtra("MovetoCat") != null) {
-            ACTVcategory.setVisibility(View.VISIBLE);
+            spinnercategories.setVisibility(View.VISIBLE);
+            Edtcat.setVisibility(View.GONE);
             Edtname.setVisibility(View.GONE);
             Edtdate.setVisibility(View.GONE);
             btndatepicker.setVisibility(View.GONE);
+            SQLiteDb sqLiteDb = new SQLiteDb(getApplicationContext());
+            todoLists = sqLiteDb.getcategories("abc");
+            List<String> abc=new ArrayList<>();
+            todoLists = sqLiteDb.getcategories("abc");
+            for(int i=0;i<todoLists.size();i++)
+            {
+                abc.add(todoLists.get(i).getTaskCategory());
+
+            }
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, abc);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnercategories.setAdapter(dataAdapter);
         }
-        SQLiteDb sqLiteDb = new SQLiteDb(getApplicationContext());
+        {
+       /* SQLiteDb sqLiteDb = new SQLiteDb(getApplicationContext());
         todoLists = sqLiteDb.getcategories("abc");
         if (todoLists != null) {
             String[] array = new String[todoLists.size()];
@@ -91,6 +113,8 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, array);
             ACTVcategory.setAdapter(adapter);
+            */
+
         }
 
     }
@@ -102,7 +126,7 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
         name = Edtname.getText().toString();
 
         date = Edtdate.getText().toString();
-        category = ACTVcategory.getText().toString();
+        category = Edtcat.getText().toString();
         switch (view.getId()) {
             case R.id.btnaddtolist:
 
@@ -116,7 +140,7 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
 
                     date = Edtdate.getText().toString();
                     intent = getIntent();
-                    Log.d("ghemc", "" + intent.getStringExtra("TasksActivity"));
+                //    Log.d("ghemc", "" + intent.getStringExtra("TasksActivity"));
                     if(date.equals(""))
                     {
                         sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, "Infinity");
@@ -127,7 +151,7 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
 
                     }
 
-                    sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
+                  //  sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
 
                 } else if (intent.getStringExtra("Edititem") != null) {
                     String edit = intent.getStringExtra("Edititem");
@@ -138,11 +162,11 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
 
                 } else if (intent.getStringExtra("EditCategory") != null) {
 
-                    String op = sqLiteDb.editcategory(intent.getStringExtra("EditCategory").toString(), ACTVcategory.getText().toString());
+                    String op = sqLiteDb.editcategory(intent.getStringExtra("EditCategory"), Edtcat.getText().toString());
                     if (op.equals("Exist")) {
-                        Toast.makeText(getApplicationContext(), "Already Exists", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), op, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Entered Successufully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), op, Toast.LENGTH_SHORT).show();
 
                     }
                 } else if (intent.getStringExtra("Category") != null) {
@@ -154,7 +178,7 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
 
                     }
                 } else if (intent.getStringExtra("MovetoCat") != null) {
-                    String op = sqLiteDb.moveitem(category, intent.getStringExtra("MovetoCat"));
+                    String op = sqLiteDb.moveitem(String.valueOf(spinnercategories.getSelectedItem()), intent.getStringExtra("MovetoCat"));
                     if (op.equals("Exist")) {
                         Toast.makeText(getApplicationContext(), "Already Exists in this category", Toast.LENGTH_SHORT).show();
                     } else {

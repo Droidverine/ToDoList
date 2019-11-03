@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#7990A4AE</color>
     <color name="white">#ffffff</color>
-    <color name="yellow">#FFEB3B</color>
-    <color name="CardColor">#FFFFFF</color>
-    <color name="CardTitle"></color>
-    <color name="CardSubtext"></color>
-    <color name="Background"></color>
+    <color name="yellow">#ffee58</color>
+    <color name="CardBackground">#3390A4AE</color>
+    <color name="Completedtasks">#26a69a</color>
+    <color name="CardTitle">#90a4ae</color>
+    <color name="CardSubtext">#A9E0E0E0</color>
 
 
 </resources>

@@ -6,13 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:itemBackground">@color/CardBackground</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorAccent">@color/CardBackground</item>
+        <item name="android:itemBackground">@color/cardview_dark_background</item>
+        <item name="android:textColor">@color/Completedtasks</item>
     </style>
-
+<style name="Theme.AppCompat.Light.Dialog.Aler">
+    <item name="android:colorBackground">@color/CardBackground</item>
+</style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
