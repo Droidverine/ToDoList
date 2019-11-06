@@ -81,7 +81,6 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
             btnaddtodo.setText("Edit");
 
 
-
         } else if (intent.getStringExtra("Category") != null) {
             Edtname.setVisibility(View.VISIBLE);
             Edtdate.setVisibility(View.VISIBLE);
@@ -90,7 +89,6 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
             Edtcat.setVisibility(View.GONE);
             TxtTasktype.setText("Create task");
             btnaddtodo.setText("Create");
-
 
 
             Edtname.setVisibility(View.VISIBLE);
@@ -137,20 +135,16 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                 sqLiteDb = new SQLiteDb(getApplicationContext());
                 sqLiteDb.getWritableDatabase();
                 if (intent.getStringExtra("Activity") != null) {
-                    if(category.isEmpty())
-                    {
-                        Toast.makeText(getApplicationContext(),"Category can't be empty",Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    if (category.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Category can't be empty", Toast.LENGTH_SHORT).show();
+                    } else {
                         String op = sqLiteDb.insertdb(category);
-                        if(op.equals("Succesfull"))
-                        {
-                            Toast.makeText(getApplicationContext(),"Whoaaa",Toast.LENGTH_SHORT).show();
+                        if (op.equals("Succesfull")) {
+                            Toast.makeText(getApplicationContext(), "Whoaaa", Toast.LENGTH_SHORT).show();
                             finish();
 
-                        }
-                        else {
-                            Toast.makeText(getApplicationContext(),"Already Exists",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Already Exists", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -165,38 +159,33 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                     String ed_text = Edtname.getText().toString().trim();
 
                     String msg;
-                    if(ed_text.isEmpty())
-                    {
-                        Toast.makeText(getApplicationContext(),"Task name can't be empty", Toast.LENGTH_SHORT).show();
+                    if (ed_text.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Task name can't be empty", Toast.LENGTH_SHORT).show();
 
-                    }else{
+                    } else {
                         if (date.equals("")) {
-                            response=  sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, "Infinity");
-                            if(response.equals("Exist"))
-                            {
+                            response = sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, "Infinity");
+                            if (response.equals("Exist")) {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 
-                            }else {
+                            } else {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                 finish();
 
                             }
 
                         } else {
-                            response= sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
-                            if(response.equals("Exist"))
-                            {
+                            response = sqLiteDb.insertdb(intent.getStringExtra("TasksActivity"), name, date);
+                            if (response.equals("Exist")) {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
 
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
                                 finish();
 
                             }
                         }
                     }
-
 
 
                 } else if (intent.getStringExtra("Edititem") != null) {
@@ -206,12 +195,10 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                     String ed_text = Edtname.getText().toString().trim();
 
                     String msg;
-                    if(ed_text.isEmpty())
-                    {
-                        Toast.makeText(getApplicationContext(),"Name cant be empty", Toast.LENGTH_SHORT).show();
+                    if (ed_text.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Name cant be empty", Toast.LENGTH_SHORT).show();
 
-                    }
-                    else {
+                    } else {
                         if (date.equals("")) {
                             msg = sqLiteDb.edititem(edit, name, "Infinity");
                             finish();
@@ -223,22 +210,21 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
                         }
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
 
-}
+                    }
 
                 } else if (intent.getStringExtra("EditCategory") != null) {
-                   category= Edtcat.getText().toString();
-                    if(category.isEmpty())
-                    {
-                        Toast.makeText(getApplicationContext(),"category cant be null", Toast.LENGTH_SHORT).show();
+                    category = Edtcat.getText().toString();
+                    if (category.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "category cant be null", Toast.LENGTH_SHORT).show();
 
-                    }else {
-                    String op = sqLiteDb.editcategory(intent.getStringExtra("EditCategory"), category);
-                    if (op.equals("Exists")) {
-                        Toast.makeText(getApplicationContext(), op, Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), op, Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
+                        String op = sqLiteDb.editcategory(intent.getStringExtra("EditCategory"), category);
+                        if (op.equals("Exists")) {
+                            Toast.makeText(getApplicationContext(), op, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), op, Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     }
                 } else if (intent.getStringExtra("Category") != null) {
 

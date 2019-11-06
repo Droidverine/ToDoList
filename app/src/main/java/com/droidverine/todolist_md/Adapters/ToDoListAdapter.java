@@ -15,17 +15,20 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+
 import com.droidverine.todolist_md.Activities.AddtodoitemActivity;
 import com.droidverine.todolist_md.Activities.DialogActivity;
 import com.droidverine.todolist_md.Activities.TasksActivity;
 import com.droidverine.todolist_md.Models.TodoList;
 import com.droidverine.todolist_md.R;
 import com.droidverine.todolist_md.Utils.SQLiteDb;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;

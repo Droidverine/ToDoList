@@ -20,7 +20,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
     public static final String DB_NAME = "ToDOList.db";
     String createtabletasks = "CREATE TABLE " + constants.DBNAME + " ( " + constants.TASK_DATE + " VARCHAR , "
             + constants.TASK_NAME + " VARCHAR, " + constants.TASK_CATEGORY + " VARCHAR , " + constants.TASK_STATUS + " VARCHAR,UNIQUE ( " +
-            constants.TASK_NAME+", "+ constants.TASK_CATEGORY+") );";
+            constants.TASK_NAME + ", " + constants.TASK_CATEGORY + ") );";
     String createtablecategories = "CREATE TABLE " + constants.TABLE_CATEGORIES + " ( " + constants.CATEGORY_INDEX + " VARCHAR , "
             + constants.CATEGORY_NAME + " VARCHAR PRIMARY KEY ); ";
 
@@ -86,7 +86,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
     }
 
     public String editcategory(String oldCategoryname, String newCategoryname) {
-        String msg="";
+        String msg = "";
         SQLiteDatabase db = this.getWritableDatabase();
 
         try {
@@ -97,31 +97,26 @@ public class SQLiteDb extends SQLiteOpenHelper {
             db.execSQL(cursorQueryforcategoriestable);
 
 
-
         } catch (android.database.sqlite.SQLiteConstraintException e) {
             Log.e("DATABASE ERROR", e.toString());
-            msg="Exists";
+            msg = "Exists";
 
         }
-        if(msg.equals("Exists"))
-        {
-            return  msg;
-        }else{
+        if (msg.equals("Exists")) {
+            return msg;
+        } else {
             String cursorQueryfortaskstable = "UPDATE " + constants.DBNAME + " SET " + constants.TASK_CATEGORY + " = '" + newCategoryname + "'" + " WHERE " + constants.TASK_CATEGORY + " = '" + oldCategoryname +
                     "' ;";
             try {
                 db.execSQL(cursorQueryfortaskstable);
-                msg="Successfull";
+                msg = "Successfull";
 
-            }catch (Exception E)
-            {
-                msg="Are you kidding";
+            } catch (Exception E) {
+                msg = "Are you kidding";
 
             }
 
         }
-
-
 
 
         return msg;

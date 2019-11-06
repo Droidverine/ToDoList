@@ -4,93 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="@color/colorPrimary"
+    android:gravity="center"
     android:orientation="vertical"
 
     tools:context=".Activities.AddtodoitemActivity">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:padding="12dp"
-        app:cardElevation="16dp"
+        app:cardBackgroundColor="@color/colorAccent"
 
-        app:cardBackgroundColor="@color/colorAccent">
+        app:cardElevation="16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-            <TextView
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnaddtolist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title"
-                android:id="@+id/Txttasktype"
-                android:textSize="32sp"
-                android:textColor="@color/CardTitle"
-                android:textStyle="bold"/>
-         <EditText
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:id="@+id/Edtcategory"
-             android:hint="Enter Category Name"></EditText>
+                android:text="Add to list" />
+
+            <EditText
+                android:id="@+id/EdtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+
+                android:layout_marginRight="12dp"
+                android:hint="Enter Task Name"
+                android:padding="12dp"
+                android:textSize="18dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+            <EditText
+                android:id="@+id/Edtcategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Category Name"></EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btndatepciker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Select Date" />
+
+                <EditText
+                    android:id="@+id/EdtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:focusable="false"
+                    android:hint="Date here"
+                    android:inputType="none"
+                    android:padding="12dp"
+                    android:textSize="18dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            </LinearLayout>
+
 
             <Spinner
                 android:id="@+id/spiner_categories"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/EdtName"
-        android:padding="12dp"
-
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:hint="Enter Task Name"
-        android:textSize="18dp"/>
+                android:visibility="gone" />
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:id="@+id/EdtDate"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:hint="Date here"
-            android:focusable="false"
-            android:editable="false"
-            android:inputType="none"
-            android:clickable="false"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:textSize="18dp"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Date"
-            android:id="@+id/btndatepciker"
-        />
-    </LinearLayout>
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnaddtolist"
-        android:text="Add to list"
-        />
+            <TextView
+                android:id="@+id/Txttasktype"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textColor="@color/CardTitle"
+                android:textSize="32sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
