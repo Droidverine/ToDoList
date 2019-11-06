@@ -17,9 +17,11 @@
         <item name="android:itemBackground">@color/cardview_dark_background</item>
         <item name="android:textColor">@color/Completedtasks</item>
     </style>
-<style name="Theme.AppCompat.Light.Dialog.Aler">
-    <item name="android:colorBackground">@color/CardBackground</item>
-</style>
+
+    <style name="Theme.AppCompat.Light.Dialog.Aler">
+        <item name="android:colorBackground">@color/CardBackground</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

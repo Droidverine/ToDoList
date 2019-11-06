@@ -19,7 +19,8 @@ public class SQLiteDb extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "ToDOList.db";
     String createtabletasks = "CREATE TABLE " + constants.DBNAME + " ( " + constants.TASK_DATE + " VARCHAR , "
-            + constants.TASK_NAME + " VARCHAR PRIMARY KEY , " + constants.TASK_CATEGORY + " VARCHAR , " + constants.TASK_STATUS + " VARCHAR );";
+            + constants.TASK_NAME + " VARCHAR, " + constants.TASK_CATEGORY + " VARCHAR , " + constants.TASK_STATUS + " VARCHAR,UNIQUE ( " +
+            constants.TASK_NAME+", "+ constants.TASK_CATEGORY+") );";
     String createtablecategories = "CREATE TABLE " + constants.TABLE_CATEGORIES + " ( " + constants.CATEGORY_INDEX + " VARCHAR , "
             + constants.CATEGORY_NAME + " VARCHAR PRIMARY KEY ); ";
 
@@ -55,6 +56,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
             contentValues.put(constants.TASK_DATE, Date);
             contentValues.put(constants.TASK_STATUS, "0");
             sqLiteDatabase.insertOrThrow(constants.DBNAME, null, contentValues);
+
             Log.d("DATABASE", "ENTERED SUCCESSFULLY");
         } catch (android.database.sqlite.SQLiteConstraintException e) {
             Log.e("DATABASE ERROR", e.toString());
@@ -109,7 +111,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
                     "' ;";
             try {
                 db.execSQL(cursorQueryfortaskstable);
-                msg="Success";
+                msg="Successfull";
 
             }catch (Exception E)
             {
@@ -129,7 +131,7 @@ public class SQLiteDb extends SQLiteOpenHelper {
         //Get todo list as per category
         List<TodoList> todoListArrayList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "'  ORDER BY  TASKDATE DESC, TASKSTATYS DESC;";
+        String cursorQuery = "SELECT * FROM " + constants.DBNAME + " WHERE " + constants.TASK_CATEGORY + " = '" + Category + "'  ORDER BY  TASKSTATYS DESC, TASKDATE DESC;";
         Cursor cursor = db.rawQuery(cursorQuery, null);
         for (cursor.moveToLast(); !cursor.isBeforeFirst(); cursor.moveToPrevious()) {
             TodoList todoList_data = new TodoList();

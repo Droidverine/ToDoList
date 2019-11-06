@@ -54,7 +54,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("CATEGORIES");
         setSupportActionBar(toolbar);
+
         recyclerView = findViewById(R.id.recyclercategories);
 
         FloatingActionButton fab = findViewById(R.id.fab);

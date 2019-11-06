@@ -28,6 +28,7 @@ public class TasksActivity extends AppCompatActivity implements View.OnClickList
     Intent intent, intent1;
 
 
+
     @Override
     protected void onPostResume() {
         super.onPostResume();
@@ -52,9 +53,11 @@ public class TasksActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
+        intent1 = getIntent();
         Toolbar toolbar = findViewById(R.id.toolbar);
-        recyclerView = findViewById(R.id.recyclertodolist);
+        toolbar.setTitle(intent1.getStringExtra("Category").toUpperCase()+"- TODOLIST");
         setSupportActionBar(toolbar);
+        recyclerView = findViewById(R.id.recyclertodolist);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(this);
     }

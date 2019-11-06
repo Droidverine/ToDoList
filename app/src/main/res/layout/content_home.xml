@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Activities.HomeActivity"
     tools:showIn="@layout/activity_home"
-    android:background="@color/colorPrimary"
+    android:background="@color/ActivityBackground"
     >
 
     <androidx.recyclerview.widget.RecyclerView

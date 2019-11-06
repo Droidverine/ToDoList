@@ -8,6 +8,7 @@
     <color name="CardBackground">#3390A4AE</color>
     <color name="Completedtasks">#26a69a</color>
     <color name="CardTitle">#90a4ae</color>
+    <color name="ActivityBackground">#000000</color>
     <color name="CardSubtext">#A9E0E0E0</color>
 
 

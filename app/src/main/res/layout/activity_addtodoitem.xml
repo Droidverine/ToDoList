@@ -12,9 +12,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_marginRight="12dp"
         android:layout_marginLeft="12dp"
+        android:padding="12dp"
         app:cardElevation="16dp"
 
         app:cardBackgroundColor="@color/colorAccent">
@@ -22,8 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="16dp"
             android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:id="@+id/Txttasktype"
+                android:textSize="32sp"
+                android:textColor="@color/CardTitle"
+                android:textStyle="bold"/>
          <EditText
              android:layout_width="match_parent"
              android:layout_height="wrap_content"
@@ -63,6 +70,10 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:hint="Date here"
+            android:focusable="false"
+            android:editable="false"
+            android:inputType="none"
+            android:clickable="false"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:textSize="18dp"/>
         <Button

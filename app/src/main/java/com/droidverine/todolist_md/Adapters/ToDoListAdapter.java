@@ -12,26 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.droidverine.todolist_md.Activities.AddtodoitemActivity;
 import com.droidverine.todolist_md.Activities.DialogActivity;
 import com.droidverine.todolist_md.Activities.TasksActivity;
 import com.droidverine.todolist_md.Models.TodoList;
 import com.droidverine.todolist_md.R;
 import com.droidverine.todolist_md.Utils.SQLiteDb;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -142,21 +136,20 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
 
         } else if (todoLists != null && act == "taks") {
             holder.txttaskname.setText(todoLists.get(position).getTaskname());
-            holder.txttaskdate.setText(todoLists.get(position).getTaskdate());
+            String ed_text = todoLists.get(position).getTaskdate().trim();
+
+            if (ed_text.equals("Infinity")) {
+                holder.txttaskdate.setText("");
+
+            } else {
+                holder.txttaskdate.setText(todoLists.get(position).getTaskdate());
+
+            }
+
             holder.txttaskcompletedcount.setVisibility(View.GONE);
             holder.txttaskcount.setVisibility(View.GONE);
 
             holder.checkBox.setVisibility(View.VISIBLE);
-            SimpleDateFormat sdf = new SimpleDateFormat();
-
-            Date date = new Date();
-            Date strDate = null;
-            //Date today= sdf.format(str);
-            try {
-                strDate = sdf.parse(todoLists.get(position).getTaskdate());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
 
             if (todoLists.get(position).getTaskstatus().equals("0")) {
@@ -167,13 +160,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
 
 
             }
-            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-
-
-                }
-            });
 
 
         }
@@ -271,7 +257,6 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                     Intent intent = new Intent(context, DialogActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("OperationType", "Delete");
-
                     intent.putExtra("TaskName", todoLists.get(getAdapterPosition()).getTaskname());
                     intent.putExtra("TaskCat", todoLists.get(getAdapterPosition()).getTaskCategory());
                     context.startActivity(intent);
@@ -279,13 +264,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
 
                 }
             });
-            txttaskname.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, txttaskdate.getText().toString(), Toast.LENGTH_SHORT).show();
 
-                }
-            });
             checkBox.setOnClickListener(new View.OnClickListener() {
 
                 @Override
