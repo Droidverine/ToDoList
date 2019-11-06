@@ -96,6 +96,7 @@ public class AddtodoitemActivity extends AppCompatActivity implements View.OnCli
             btndatepicker.setVisibility(View.VISIBLE);
         } else if (intent.getStringExtra("MovetoCat") != null) {
             spinnercategories.setVisibility(View.VISIBLE);
+            TxtTasktype.setText("Move to ");
             btnaddtodo.setText("Move");
 
             Edtcat.setVisibility(View.GONE);
