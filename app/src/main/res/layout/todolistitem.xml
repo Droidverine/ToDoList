@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="8dp"
-    android:id="@+id/cardItem"
     android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:elevation="8dp"
     android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/CardBackground">
     <!-- Using cardview just to give it a descent materialistic look to listitem !-->
 
@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-
         android:padding="16dp"
         android:showDividers="end">
         <!-- Using RelativeLayout just to give it a descent materialistic look to listitem !-->
@@ -30,13 +29,14 @@
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:background="@android:color/transparent"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:text="&#8942;"
-            android:visibility="gone"
+            android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/CardTitle"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:focusable="true"
-            android:textAppearance="?android:textAppearanceLarge" />
+            android:visibility="gone" />
+
         <CheckBox
             android:id="@+id/itemcheckbox"
             android:layout_width="wrap_content"
@@ -54,22 +54,7 @@
             android:layout_below="@+id/Listitemdata"
             android:layout_alignParentStart="true"
             android:orientation="horizontal"
-            android:paddingTop="6dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:id="@+id/txtitemscount"
-                android:textColor="@color/CardSubtext"
-                android:paddingRight="12dp"></TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/txtitemscompletecount"
-                android:textColor="@color/Completedtasks"
-                android:paddingRight="12dp"></TextView>
+            android:paddingTop="6dp">
 
             <ImageView
                 android:id="@+id/edtbtn"
@@ -82,6 +67,7 @@
 
 
                 />
+
             <ImageView
                 android:id="@+id/movebtn"
                 android:layout_width="24dp"
@@ -99,11 +85,27 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_weight="1"
-                android:tint="@color/CardSubtext"
-
                 android:src="@drawable/ic_delete_icon"
 
+                android:tint="@color/CardSubtext"
+
                 />
+
+            <TextView
+                android:id="@+id/txtitemscompletecount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="12dp"
+                android:text=""
+                android:textColor="@color/Completedtasks"></TextView>
+
+            <TextView
+                android:id="@+id/txtitemscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="12dp"
+                android:text=" "
+                android:textColor="@color/CardSubtext"></TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -118,9 +120,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
-                android:textStyle="bold"
                 android:textColor="@color/CardTitle"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/itemdate"

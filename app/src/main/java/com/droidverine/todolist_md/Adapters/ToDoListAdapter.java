@@ -59,6 +59,7 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
         if (todoLists != null && act == "Home") {
             //executes this part if the previous activity was Home
             sqLiteDb = new SQLiteDb(context);
+
             holder.txttaskname.setText(todoLists.get(position).getTaskCategory());
             String date = "";
             if (sqLiteDb.getDates(todoLists.get(position).getTaskCategory()) != null) {
@@ -66,23 +67,28 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
                 date = sqLiteDb.getDates(todoLists.get(position).getTaskCategory());
 
             }
-            DateFormat df = new SimpleDateFormat("yyy/MM/dd");
+
+            DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
             Date date1 = new Date();
             Date nddate = null;
             String nd = df.format(date1);
+
             Date due = null;
             try {
                 due = df.parse(date);
                 nddate = df.parse(nd);
+
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             if (due != null) {
-                Log.d("compare1", "status " + due.compareTo(nddate));
+                //  Log.d("aja", due.toString());
+                Log.d("compare1", "ali " + due);
 
                 if (due.compareTo(nddate) < 0) {
                     // If due has passed
                     Log.d("compare1", "past " + due);
+                    holder.txttaskdate.setText("Some item’s due date is past ");
 
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#D81B60"));
                     holder.txttaskname.setTextColor(Color.parseColor("#000000"));
@@ -91,10 +97,18 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
 
                 } else if (due.compareTo(nddate) > 0) {
                     //If due is not present/it's not today.
+                    Log.d("compare1", "date" + nddate);
+                    holder.txttaskdate.setText("Nearest Due: " + date);
+
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#3390A4AE"));
+
 
                 } else if (nddate.compareTo(due) == 0) {
                     //if due is today
+                    Log.d("compare1", "date" + nddate);
+                    holder.txttaskdate.setText("Some item's due today");
+                    holder.txttaskdate.setTextColor(Color.parseColor("#D81B60"));
+
                     holder.carditem.setCardBackgroundColor(Color.parseColor("#ffee58"));
                     holder.txttaskname.setTextColor(Color.parseColor("#000000"));
                     holder.txttaskcount.setTextColor(Color.parseColor("#000000"));
@@ -110,10 +124,12 @@ public class ToDoListAdapter extends RecyclerView.Adapter<ToDoListAdapter.TodoVi
             holder.movebtn.setVisibility(View.GONE);
             holder.txttaskcompletedcount.setVisibility(View.VISIBLE);
             holder.txttaskcount.setVisibility(View.VISIBLE);
+            holder.txttaskdate.setVisibility(View.VISIBLE);
             int count = sqLiteDb.countitems(todoLists.get(position).getTaskCategory());
             int comcount = sqLiteDb.getcompletedcount(todoLists.get(position).getTaskCategory());
             holder.txttaskcount.setText("No. Of tasks: " + count);
             holder.txttaskcompletedcount.setText("Completed till now: " + comcount);
+
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
             holder.carditem.setOnClickListener(new View.OnClickListener() {

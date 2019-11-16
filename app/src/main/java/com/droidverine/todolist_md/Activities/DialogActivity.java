@@ -58,11 +58,11 @@ public class DialogActivity extends Activity implements View.OnClickListener {
                         sqLiteDb.checkboxset(category, task, "0");
 
                     }
-                }
-                else if(operationtype.equals("DeleteCategory")){
+                } else if (operationtype.equals("DeleteCategory")) {
                     sqLiteDb.deletecategory(category);
 
-                }                finish();
+                }
+                finish();
 
                 break;
             case R.id.btnno:

@@ -27,6 +27,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:tint="@color/Completedtasks"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <include layout="@layout/content_home" />
